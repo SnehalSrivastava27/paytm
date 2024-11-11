@@ -7,4 +7,23 @@ const userSchema=new mongoose.Schema({
     secondName:{type:String,require:true},
     password:{type:String,require:true},
 })
-models.export('User',userSchema);
+const accountSchema=new mongoose.Schema(
+    {
+        userId:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'User',
+            required:true
+        },
+        balance:{
+            type:Number,
+            required:true
+        }
+    }
+);
+const Account=mongoose.model('Account',accountSchema);
+const User=mongoose.model('User',userSchema);
+
+module.exports={
+    User,
+    Account,
+};
