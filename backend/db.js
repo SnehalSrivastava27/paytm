@@ -1,8 +1,12 @@
 const mongoose=require('mongoose');
-mongoose.connect("mongodb+srv://Snehal:Snehal27@cluster0.ow4lqxn.mongodb.net/paytm");
+// mongoose.connect("mongodb+srv://Snehal:Snehal27@cluster0.ow4lqxn.mongodb.net/paytm");
 //model define for users
+mongoose.connect("mongodb+srv://Snehal:Snehal27@cluster0.ow4lqxn.mongodb.net/paytm")
+    .then(() => console.log("Connected to MongoDB"))
+    .catch(err => console.error("MongoDB connection error:", err));
+
 const userSchema=new mongoose.Schema({
-    username:{type:String,require:true},
+    username:{type:String,require:true, unique: true},
     firstName:{type:String,require:true},
     secondName:{type:String,require:true},
     password:{type:String,require:true},

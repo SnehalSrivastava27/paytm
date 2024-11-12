@@ -11,11 +11,12 @@ const  { authMiddleware } = require("../middleware");
 const signupBody = zod.object({
     username: zod.string().email(),
 	firstName: zod.string(),
-	lastName: zod.string(),
+	secondName: zod.string(),
 	password: zod.string()
 })
 
 router.post("/signup", async (req, res) => {
+    console.log("Request body:", req.body);
     const { success } = signupBody.safeParse(req.body)
     if (!success) {
         return res.status(411).json({
@@ -37,7 +38,7 @@ router.post("/signup", async (req, res) => {
         username: req.body.username,
         password: req.body.password,
         firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        secondName: req.body.secondName,
     })
     const userId = user._id;
 
@@ -95,7 +96,7 @@ router.post("/signin", async (req, res) => {
 const updateBody = zod.object({
 	password: zod.string().optional(),
     firstName: zod.string().optional(),
-    lastName: zod.string().optional(),
+    secondName: zod.string().optional(),
 })
 
 router.put("/", authMiddleware, async (req, res) => {
@@ -119,12 +120,12 @@ router.get("/bulk", async (req, res) => {  // do same thing as like query in SQL
     const filter = req.query.filter || "";  //sending to db
 
     const users = await User.find({ 
-        $or: [{ //$ or either first name is gtg or lastname
+        $or: [{ //$ or either first name is gtg or secondname
             firstName: {
                 "$regex": filter
             }
         }, {
-            lastName: {
+            secondName: {
                 "$regex": filter
             }
         }]
@@ -134,7 +135,7 @@ router.get("/bulk", async (req, res) => {  // do same thing as like query in SQL
         user: users.map(user => ({
             username: user.username,
             firstName: user.firstName,
-            lastName: user.lastName,
+            secondName: user.secondName,
             _id: user._id
         }))
     })
