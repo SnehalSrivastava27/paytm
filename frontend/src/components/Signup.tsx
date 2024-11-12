@@ -3,6 +3,7 @@ import {Heading}from "./Heading"
 import { InputBox } from "./InputBox"
 import { SubHeading } from "./SubHeading"
 import { Button } from "./Button"
+import { BottomWarning } from "./BottomWarning"
 export default function Signup(){
    return (
     <>
@@ -14,6 +15,7 @@ export default function Signup(){
            <InputBox head={"Email"} place={"enter email"}></InputBox>
            <InputBox head={"Password"} place={"enter password"}></InputBox> 
            <Button label="Sign up"></Button>   
+           <BottomWarning to={"/signin"} label={"Already have account ? "} buttonText={"Sign in"} ></BottomWarning>
         </div>
     </>
    )
